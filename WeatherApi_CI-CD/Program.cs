@@ -1,3 +1,10 @@
+
+//[]Som användare av API:et vill jag kunna få aktuell väderdata(temperatur, luftfuktighet, vind) för Stockholm
+//[]Som användare av API:et vill jag kunna spara en favoritstad och slippa ange den varje gång(Obs att det bara ska sparas så länge appen körs, alltså inte mellan körningar)
+//[]Som systemägare vill jag kunna se om API:et körs(health check)
+//[]Som systemägare vill jag kunna se statistik på antal anrop sen API:et startades
+//[]Som slutanvändare av Reactklienten vill jag kunna se aktuellt väder för Stockholm
+//[]Som slutanvändare av Reactklienten vill jag kunna se och spara favoritstad
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
@@ -16,28 +23,28 @@ if (app.Environment.IsDevelopment())
 
 app.UseHttpsRedirection();
 
-var summaries = new[]
-{
-    "Freezing", "Bracing", "Chilly", "Cool", "Mild", "Warm", "Balmy", "Hot", "Sweltering", "Scorching"
-};
-
 app.MapGet("/weatherforecast", () =>
 {
-    var forecast = Enumerable.Range(1, 5).Select(index =>
-        new WeatherForecast
+    var forecast = new WeatherForecast
+    (
+        DateTime.Now,
+        new WeatherData
         (
-            DateTime.Now.AddDays(index),
-            Random.Shared.Next(-20, 55),
-            summaries[Random.Shared.Next(summaries.Length)]
-        ))
-        .ToArray();
+            "Stockholm",
+            new WeatherProperty("Temperature", 23, "°C"),
+            new WeatherProperty("Humidity", 65, "%"),
+            new WeatherProperty("Wind", 12.5, "km/h")
+        )
+    );
+
     return forecast;
 })
-.WithName("GetWeatherForecast");
+.WithName("GetCurrentWeatherData");
 
 app.Run();
 
-internal record WeatherForecast(DateTime Date, int TemperatureC, string? Summary)
-{
-    public int TemperatureF => 32 + (int)(TemperatureC / 0.5556);
-}
+public record WeatherForecast(DateTime Date, WeatherData WeatherData);
+
+public record WeatherData(string Location, WeatherProperty Temperature, WeatherProperty Humidity, WeatherProperty Wind);
+
+public record WeatherProperty(string Name, double Value, string Unit);
