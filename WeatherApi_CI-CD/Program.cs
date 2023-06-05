@@ -5,6 +5,8 @@
 //[]Som systemägare vill jag kunna se statistik på antal anrop sen API:et startades
 //[]Som slutanvändare av Reactklienten vill jag kunna se aktuellt väder för Stockholm
 //[]Som slutanvändare av Reactklienten vill jag kunna se och spara favoritstad
+using WeatherApi_CI_CD;
+
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
@@ -40,6 +42,14 @@ app.MapGet("/weatherforecast", () =>
     return forecast;
 })
 .WithName("GetCurrentWeatherData");
+
+app.MapPost("/favorite-city", async (City city, DataContext db) =>
+{
+    db.Cities.Add(city);
+    await db.SaveChangesAsync();
+    return Results.Created($"/save/{city.Name}", city);
+
+});
 
 app.Run();
 
