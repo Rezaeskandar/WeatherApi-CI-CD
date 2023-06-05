@@ -24,7 +24,7 @@ public class FavoriteCityEndpointTests
             // Assert
 
             Assert.IsType<NotFoundResult>(result);
-            // Assert.IsType<CreatedAtActionResult>(result);
+           
         }
     }
 }
