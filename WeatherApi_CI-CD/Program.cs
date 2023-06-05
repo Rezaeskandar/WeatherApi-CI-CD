@@ -1,5 +1,5 @@
 
-//[]Som användare av API:et vill jag kunna få aktuell väderdata(temperatur, luftfuktighet, vind) för Stockholm
+//[x]As a user of the API, I want to be able to get current weather data (temperature, humidity, wind) for Stockholm.
 //[]Som användare av API:et vill jag kunna spara en favoritstad och slippa ange den varje gång(Obs att det bara ska sparas så länge appen körs, alltså inte mellan körningar)
 //[]Som systemägare vill jag kunna se om API:et körs(health check)
 //[]Som systemägare vill jag kunna se statistik på antal anrop sen API:et startades
