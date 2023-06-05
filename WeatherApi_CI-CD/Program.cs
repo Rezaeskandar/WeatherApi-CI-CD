@@ -1,4 +1,6 @@
 
+
+
 //[x]As a user of the API, I want to be able to get current weather data (temperature, humidity, wind) for Stockholm.
 //[]Som användare av API:et vill jag kunna spara en favoritstad och slippa ange den varje gång(Obs att det bara ska sparas så länge appen körs, alltså inte mellan körningar)
 //[]Som systemägare vill jag kunna se om API:et körs(health check)
@@ -23,7 +25,7 @@ if (app.Environment.IsDevelopment())
 
 app.UseHttpsRedirection();
 
-app.MapGet("/weatherforecast", () =>
+app.MapGet("/weatherforecast-Stockholm", () =>
 {
     var forecast = new WeatherForecast
     (
@@ -40,6 +42,14 @@ app.MapGet("/weatherforecast", () =>
     return forecast;
 })
 .WithName("GetCurrentWeatherData");
+
+
+app.MapGet("/API-health", () =>
+{
+    return ($"API is healthy {StatusCodes.Status200OK}");
+});
+
+
 
 app.Run();
 

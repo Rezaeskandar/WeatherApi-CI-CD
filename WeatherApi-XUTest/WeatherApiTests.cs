@@ -3,12 +3,11 @@ using Xunit;
 using Microsoft.AspNetCore.TestHost;
 using Microsoft.AspNetCore.Hosting;
 using System.Net.Http;
-using Microsoft.Extensions.DependencyInjection;
-using Microsoft.AspNetCore.Routing;
-using Microsoft.AspNetCore.Builder;
 using System.Net.Http.Json;
+using WeatherApi_XUTest;
 
-public class WeatherForecastControllerTests
+//
+public partial class WeatherForecastControllerTests
 {
     private readonly TestServer _server;
     private readonly HttpClient _client;
@@ -28,7 +27,7 @@ public class WeatherForecastControllerTests
         // Arrange
 
         // Act
-        var response = await _client.GetAsync("/weatherforecast");
+        var response = await _client.GetAsync("/weatherforecast-Stockholm");
 
         // Assert
         response.EnsureSuccessStatusCode();
@@ -43,37 +42,34 @@ public class WeatherForecastControllerTests
         _client.Dispose();
         _server.Dispose();
     }
-}
 
-public class TestStartup
-{
-    public void ConfigureServices(IServiceCollection services) 
+
+    // health check 
+
+    public class HealthCheckTests : IClassFixture<TestServerFixture>
     {
-        services.AddRouting();
-    }
+        private readonly TestServer _server;
+        private readonly HttpClient _client;
 
-    public void Configure(IApplicationBuilder app)
-    {
-        app.UseRouting();
-
-        app.UseEndpoints(endpoints =>
+        public HealthCheckTests(TestServerFixture fixture)
         {
-            endpoints.MapGet("/weatherforecast", () =>
-            {
-                var forecast = new WeatherForecast
-                (
-                    DateTime.Now,
-                    new WeatherData
-                    (
-                        "Stockholm",
-                        new WeatherProperty("Temperature", 23, "°C"),
-                        new WeatherProperty("Humidity", 65, "%"),
-                        new WeatherProperty("Wind", 12.5, "km/h")
-                    )
-                );
+            _server = fixture.Server;
+            _client = _server.CreateClient();
+        }
 
-                return forecast;
-            });
-        });
+        [Fact]
+        public async Task GetHealth_ReturnsHealthyMessage()
+        {
+            // Act
+            var response = await _client.GetAsync("/API-health");
+
+            // Assert
+            response.EnsureSuccessStatusCode();
+            var message = await response.Content.ReadAsStringAsync();
+            Assert.Equal("API is healthy 200", message);
+        }
     }
 }
+
+
+
