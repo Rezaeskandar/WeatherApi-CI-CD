@@ -2,11 +2,15 @@
 
 
 //[x]As a user of the API, I want to be able to get current weather data (temperature, humidity, wind) for Stockholm.
+
+using Microsoft.EntityFrameworkCore;
+
 //[]Som användare av API:et vill jag kunna spara en favoritstad och slippa ange den varje gång(Obs att det bara ska sparas så länge appen körs, alltså inte mellan körningar)
 //[]Som systemägare vill jag kunna se om API:et körs(health check)
 //[]Som systemägare vill jag kunna se statistik på antal anrop sen API:et startades
 //[]Som slutanvändare av Reactklienten vill jag kunna se aktuellt väder för Stockholm
 //[]Som slutanvändare av Reactklienten vill jag kunna se och spara favoritstad
+
 using WeatherApi_CI_CD;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -15,6 +19,7 @@ var builder = WebApplication.CreateBuilder(args);
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
+builder.Services.AddDbContext<DataContext>(c => c.UseInMemoryDatabase("City"));//here we have used memory database
 
 var app = builder.Build();
 
