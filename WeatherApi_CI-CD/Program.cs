@@ -1,11 +1,16 @@
 
+
+
 //[x]As a user of the API, I want to be able to get current weather data (temperature, humidity, wind) for Stockholm.
-//[]Som användare av API:et vill jag kunna spara en favoritstad och slippa ange den varje gång(Obs att det bara ska sparas så länge appen körs, alltså inte mellan körningar)
-//[]Som systemägare vill jag kunna se om API:et körs(health check)
-//[]Som systemägare vill jag kunna se statistik på antal anrop sen API:et startades
-//[]Som slutanvändare av Reactklienten vill jag kunna se aktuellt väder för Stockholm
-//[]Som slutanvändare av Reactklienten vill jag kunna se och spara favoritstad
+
 using Microsoft.EntityFrameworkCore;
+
+//[]Som anvÃ¤ndare av API:et vill jag kunna spara en favoritstad och slippa ange den varje gÃ¥ng(Obs att det bara ska sparas sÃ¥ lÃ¤nge appen kÃ¶rs, alltsÃ¥ inte mellan kÃ¶rningar)
+//[]Som systemÃ¤gare vill jag kunna se om API:et kÃ¶rs(health check)
+//[]Som systemÃ¤gare vill jag kunna se statistik pÃ¥ antal anrop sen API:et startades
+//[]Som slutanvÃ¤ndare av Reactklienten vill jag kunna se aktuellt vÃ¤der fÃ¶r Stockholm
+//[]Som slutanvÃ¤ndare av Reactklienten vill jag kunna se och spara favoritstad
+
 using WeatherApi_CI_CD;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -27,7 +32,7 @@ if (app.Environment.IsDevelopment())
 
 app.UseHttpsRedirection();
 
-app.MapGet("/weatherforecast", () =>
+app.MapGet("/weatherforecast-Stockholm", () =>
 {
     var forecast = new WeatherForecast
     (
@@ -35,7 +40,7 @@ app.MapGet("/weatherforecast", () =>
         new WeatherData
         (
             "Stockholm",
-            new WeatherProperty("Temperature", 23, "°C"),
+            new WeatherProperty("Temperature", 23, "Â°C"),
             new WeatherProperty("Humidity", 65, "%"),
             new WeatherProperty("Wind", 12.5, "km/h")
         )
@@ -45,6 +50,14 @@ app.MapGet("/weatherforecast", () =>
 })
 .WithName("GetCurrentWeatherData");
 
+
+app.MapGet("/API-health", () =>
+{
+    return ($"API is healthy {StatusCodes.Status200OK}");
+});
+
+
+
 app.MapPost("/favorite-city", async (City city, DataContext db) =>
 {
     db.Cities.Add(city);
@@ -52,6 +65,7 @@ app.MapPost("/favorite-city", async (City city, DataContext db) =>
     return Results.Created($"/save/{city.Name}", city);
 
 });
+
 
 app.Run();
 
