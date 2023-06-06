@@ -92,7 +92,7 @@ public partial class WeatherForecastControllerTests
         public async Task GetStatistics_ReturnsFormattedCountString()
         {
             // Arrange
-            int initialCount = 0;
+            int initialCount = 5;
             var counter = new APICounter(initialCount);
 
             // Act
