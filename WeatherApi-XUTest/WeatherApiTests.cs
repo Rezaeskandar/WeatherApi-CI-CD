@@ -92,7 +92,7 @@ public partial class WeatherForecastControllerTests
         public async Task GetStatistics_ReturnsFormattedCountString()
         {
             // Arrange
-            int initialCount = 5;
+            int initialCount = 0;
             var counter = new APICounter(initialCount);
 
             // Act
@@ -100,6 +100,7 @@ public partial class WeatherForecastControllerTests
 
             // Assert
             Assert.Equal("Number of API calls: 5", statistics);
+            
         }
     }
 }
