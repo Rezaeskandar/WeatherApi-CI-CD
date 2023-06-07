@@ -23,6 +23,8 @@ builder.Services.AddDbContext<DataContext>(c => c.UseInMemoryDatabase("City"));/
 
 var app = builder.Build();
 
+int apiCall = 0;// API call counter and make it as a global variable
+
 // Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())
 {
@@ -64,6 +66,12 @@ app.MapPost("/favorite-city", async (City city, DataContext db) =>
     await db.SaveChangesAsync();
     return Results.Created($"/save/{city.Name}", city);
 
+});
+
+app.MapGet("/API/call/statistics", () =>
+{
+    Interlocked.Increment(ref apiCall); //The Interlocked.Increment method is a thread-safe way to increment an integer value without the risk of multiple threads accessing and modifying the value simultaneously.
+    return $"Number of API calls: {apiCall}";
 });
 
 
