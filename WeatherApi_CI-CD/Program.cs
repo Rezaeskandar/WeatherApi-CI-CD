@@ -11,7 +11,7 @@ using Microsoft.EntityFrameworkCore;
 //[]Som slutanvändare av Reactklienten vill jag kunna se aktuellt väder för Stockholm
 //[]Som slutanvändare av Reactklienten vill jag kunna se och spara favoritstad
 
-using WeatherApi_CI_CD; 
+using WeatherApi_CI_CD;
 
 var builder = WebApplication.CreateBuilder(args);
 
