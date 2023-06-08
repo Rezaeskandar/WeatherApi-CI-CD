@@ -78,6 +78,10 @@ app.MapPost("/favorite-city", async (City city, DataContext db) =>
     return Results.Created($"/save/{city.Name}", city);
 
 });
+app.MapGet("/favorite-cities", async (CityContext db) =>
+{
+    return await db.Cities.ToListAsync();
+});
 
 app.MapGet("/API/call/statistics", () =>
 {
