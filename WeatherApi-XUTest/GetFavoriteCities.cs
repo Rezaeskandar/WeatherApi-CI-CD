@@ -31,7 +31,8 @@ public class GetFavoriteCities
             var result = await controller.GetFavoriteCities();
 
             // Assert 
-            Assert.Empty(result.Value); // Expecting the result to be empty initially
+            var returnedCities = Assert.IsAssignableFrom<List<City>>(result.Value);
+            Assert.NotEmpty(returnedCities);
         }
     }
 }
