@@ -2,14 +2,15 @@
 
 //TODOS
 
-//[x]As a user of the API, I want to be able to get current weather data (temperature, humidity, wind) for Stockholm.
-//[x]Som användare av API:et vill jag kunna spara en favoritstad och slippa ange den varje gång(Obs att det bara ska sparas så länge appen körs, alltså inte mellan körningar)
-//[x]Som systemägare vill jag kunna se om API:et körs(health check)
-//[x]Som systemägare vill jag kunna se statistik på antal anrop sen API:et startades
-//[x]Som slutanvändare av Reactklienten vill jag kunna se aktuellt väder för Stockholm
-//[x]Som slutanvändare av Reactklienten vill jag kunna se och spara favoritstad
 
 using Microsoft.EntityFrameworkCore;
+
+//[]Som användare av API:et vill jag kunna spara en favoritstad och slippa ange den varje gång(Obs att det bara ska sparas så länge appen körs, alltså inte mellan körningar)
+//[]Som systemägare vill jag kunna se om API:et körs(health check)
+//[]Som systemägare vill jag kunna se statistik på antal anrop sen API:et startades
+//[]Som slutanvändare av Reactklienten vill jag kunna se aktuellt väder för Stockholm
+//[]Som slutanvändare av Reactklienten vill jag kunna se och spara favoritstad
+
 using WeatherApi_CI_CD;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -18,9 +19,25 @@ var builder = WebApplication.CreateBuilder(args);
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
+builder.Services.AddHealthChecks();// built in healthcheck service for .net
+
 builder.Services.AddDbContext<DataContext>(c => c.UseInMemoryDatabase("City"));//here we have used memory database
 
+// Configure CORS
+builder.Services.AddCors(options =>
+{
+    options.AddDefaultPolicy(builder =>
+    {
+        builder.AllowAnyOrigin()
+               .AllowAnyMethod()
+               .AllowAnyHeader();
+    });
+});
+
+
 var app = builder.Build();
+
+int apiCall = 0;// API call counter and make it as a global variable
 
 // Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())
@@ -30,6 +47,8 @@ if (app.Environment.IsDevelopment())
 }
 
 app.UseHttpsRedirection();
+
+app.UseCors();
 
 app.MapGet("/weatherforecast-Stockholm", () =>
 {
@@ -63,6 +82,16 @@ app.MapPost("/favorite-city", async (City city, DataContext db) =>
     await db.SaveChangesAsync();
     return Results.Created($"/save/{city.Name}", city);
 
+});
+app.MapGet("/favorite-cities", async (DataContext db) =>
+{
+    return await db.Cities.ToListAsync();
+});
+
+app.MapGet("/API/call/statistics", () =>
+{
+    Interlocked.Increment(ref apiCall); //The Interlocked.Increment method is a thread-safe way to increment an integer value without the risk of multiple threads accessing and modifying the value simultaneously.
+    return $"Number of API calls: {apiCall}";
 });
 
 

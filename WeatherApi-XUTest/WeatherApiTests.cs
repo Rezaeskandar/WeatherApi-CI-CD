@@ -1,5 +1,7 @@
 using System;
 using Xunit;
+using System.Threading;
+using System.Threading.Tasks;
 using Microsoft.AspNetCore.TestHost;
 using Microsoft.AspNetCore.Hosting;
 using System.Net.Http;
@@ -67,6 +69,38 @@ public partial class WeatherForecastControllerTests
             response.EnsureSuccessStatusCode();
             var message = await response.Content.ReadAsStringAsync();
             Assert.Equal("API is healthy 200", message);
+        }
+    }
+
+    public class APICounterTests
+    {
+        [Fact]
+        public async Task IncrementAPICall_IncrementsCount()
+        {
+            // Arrange
+            int initialCount = 0;
+            var counter = new APICounter(initialCount);
+
+            // Act
+            await counter.IncrementAPICallAsync();
+
+            // Assert
+            Assert.Equal(1, counter.GetAPICallCount());
+        }
+
+        [Fact]
+        public async Task GetStatistics_ReturnsFormattedCountString()
+        {
+            // Arrange
+            int initialCount = 5;
+            var counter = new APICounter(initialCount);
+
+            // Act
+            var statistics = await counter.GetStatisticsAsync();
+
+            // Assert
+            Assert.Equal("Number of API calls: 5", statistics);
+            
         }
     }
 }
