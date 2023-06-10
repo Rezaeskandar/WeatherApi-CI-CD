@@ -1,10 +1,15 @@
 
 
-
+//TODOS
+//TODOSs
 
 using Microsoft.EntityFrameworkCore;
 
-
+//[]Som användare av API:et vill jag kunna spara en favoritstad och slippa ange den varje gång(Obs att det bara ska sparas så länge appen körs, alltså inte mellan körningar)
+//[]Som systemägare vill jag kunna se om API:et körs(health check)
+//[]Som systemägare vill jag kunna se statistik på antal anrop sen API:et startades
+//[]Som slutanvändare av Reactklienten vill jag kunna se aktuellt väder för Stockholm
+//[]Som slutanvändare av Reactklienten vill jag kunna se och spara favoritstad
 
 using WeatherApi_CI_CD;
 
