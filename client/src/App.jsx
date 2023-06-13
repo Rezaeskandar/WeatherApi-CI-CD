@@ -6,12 +6,11 @@ import styled from 'styled-components';
 import './App.css'
 import StockholmWeather from './components/Home';
 import Statistices from './components/Statistices';
+import SaveCities from './components/SaveCities';
+import GetCities from './components/GetCities';
 
-const MovieTitle = styled.h1`
-  margin: 3em 2em ;
-  color: #481fcd;
-  font-size: 24px;
-`;
+
+
 function App() {
 
   return (
@@ -20,6 +19,11 @@ function App() {
     </StockholmWeather>
     <Statistices>
     </Statistices>
+    <SaveCities>
+    </SaveCities>
+    <GetCities>
+    </GetCities>
+    
     </>
   )
 }
