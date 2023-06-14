@@ -1,26 +1,26 @@
 using System;
 using Xunit;
-using System.Threading;
-using System.Threading.Tasks;
 using Microsoft.AspNetCore.TestHost;
 using Microsoft.AspNetCore.Hosting;
-using System.Net.Http;
 using System.Net.Http.Json;
 using WeatherApi_XUTest;
+using WeatherApi_CI_CD;
+using Microsoft.AspNetCore.Http;
+using Microsoft.VisualStudio.TestPlatform.TestHost;
+using Microsoft.AspNetCore.Builder;
+using Microsoft.Extensions.DependencyInjection;
+using Microsoft.AspNetCore.Mvc.Testing;
 
 //
 public partial class WeatherForecastControllerTests
 {
-    private readonly TestServer _server;
+    private readonly WebApplicationFactory<Program> _factory;
     private readonly HttpClient _client;
 
     public WeatherForecastControllerTests()
     {
-        var builder = new WebHostBuilder()
-            .UseStartup<TestStartup>();
-
-        _server = new TestServer(builder);
-        _client = _server.CreateClient();
+        _factory = new WebApplicationFactory<Program>();
+        _client = _factory.CreateClient();
     }
 
     [Fact]
@@ -36,27 +36,31 @@ public partial class WeatherForecastControllerTests
         var forecast = await response.Content.ReadFromJsonAsync<WeatherForecast>();
         Assert.NotNull(forecast);
         Assert.Equal("Stockholm", forecast.WeatherData.Location);
-        // Add more assertions for other properties if needed
+        // Add these lines to check each property
+        Assert.Equal("Temperature", forecast.WeatherData.Temperature.Name);
+        Assert.Equal(23, forecast.WeatherData.Temperature.Value);
+        Assert.Equal("°C", forecast.WeatherData.Temperature.Unit);
+        Assert.Equal("Humidity", forecast.WeatherData.Humidity.Name);
+        Assert.Equal(65, forecast.WeatherData.Humidity.Value);
+        Assert.Equal("%", forecast.WeatherData.Humidity.Unit);
+        Assert.Equal("Wind", forecast.WeatherData.Wind.Name);
+        Assert.Equal(12.5, forecast.WeatherData.Wind.Value);
+        Assert.Equal("km/h", forecast.WeatherData.Wind.Unit);
     }
 
-    public void Dispose()
-    {
-        _client.Dispose();
-        _server.Dispose();
-    }
 
 
     // health check 
 
-    public class HealthCheckTests : IClassFixture<TestServerFixture>
+    public class HealthCheckTests : IClassFixture<WebApplicationFactory<Program>>
     {
-        private readonly TestServer _server;
+        private readonly WebApplicationFactory<Program> _factory;
         private readonly HttpClient _client;
 
-        public HealthCheckTests(TestServerFixture fixture)
+        public HealthCheckTests(WebApplicationFactory<Program> factory)
         {
-            _server = fixture.Server;
-            _client = _server.CreateClient();
+            _factory = factory;
+            _client = _factory.CreateClient();
         }
 
         [Fact]
