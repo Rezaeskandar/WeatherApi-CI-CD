@@ -55,7 +55,7 @@ const StockholmWeather = () => {
 
   const fetchData = async () => {
     try {
-      const response = await axios.get('https://dev.kjeld.io:40200/weatherforecast-Stockholm');
+      const response = await axios.get('https://dev.kjeld.io:40200/weatherforecast-Stockholm'); 
       const data = response.data;
       setWeatherData(data.weatherData);
       setShowWeather(true);
