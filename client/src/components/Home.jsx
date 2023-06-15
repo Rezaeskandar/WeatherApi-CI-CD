@@ -1,9 +1,7 @@
-
-
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import styled from 'styled-components';
-
+import RealApi from './RealApi';
 const Button = styled.button`
   font-size: 16px;
   padding: 10px 20px;
@@ -33,21 +31,19 @@ const Container = styled.div`
 `;
 
 const WeatherInfo = styled.div`
-  margin-bottom: 20px`; 
+  margin-bottom: 20px;
+`; 
 
- const Temperature = styled.div`
-   font-size: 48px;
-   font-weight: bold;
+const Temperature = styled.div`
+  font-size: 48px;
+  font-weight: bold;
   color: hsl(207, 75%, 43%);
 `;
 
- const WeatherProperty = styled.div`
-   font-size: 24px;
-   color: hsl(0, 0%, 40%);
- `;
-
-
-
+const WeatherProperty = styled.div`
+  font-size: 24px;
+  color: hsl(0, 0%, 40%);
+`;
 
 const StockholmWeather = () => {
   const [weatherData, setWeatherData] = useState(null);
@@ -89,11 +85,9 @@ const StockholmWeather = () => {
           <Button onClick={fetchData}>Get Stockholm Weather</Button>
         )}
       </Container>
+      <RealApi></RealApi>
     </Background>
   );
 };
 
 export default StockholmWeather;
-
-
-
