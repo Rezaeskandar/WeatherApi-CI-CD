@@ -1,7 +1,7 @@
 
 
 //TODOS
-//TODOSs
+
 
 using Microsoft.EntityFrameworkCore;
 
@@ -102,3 +102,5 @@ public record WeatherForecast(DateTime Date, WeatherData WeatherData);
 public record WeatherData(string Location, WeatherProperty Temperature, WeatherProperty Humidity, WeatherProperty Wind);
 
 public record WeatherProperty(string Name, double Value, string Unit);
+
+public partial class Program { }
