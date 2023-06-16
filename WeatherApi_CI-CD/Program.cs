@@ -11,7 +11,8 @@ using Microsoft.EntityFrameworkCore;
 //[]Som slutanvändare av Reactklienten vill jag kunna se aktuellt väder för Stockholm
 //[]Som slutanvändare av Reactklienten vill jag kunna se och spara favoritstad
 
-using WeatherApi_CI_CD;
+using WeatherApi_CI_CD.Data;
+using WeatherApi_CI_CD.Model;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -58,7 +59,7 @@ app.MapGet("/weatherforecast-Stockholm", () =>
         new WeatherData
         (
             "Stockholm",
-            new WeatherProperty("Temperature", 23, "°C"),
+            new WeatherProperty("Temperature", 33, "°C"),
             new WeatherProperty("Humidity", 65, "%"),
             new WeatherProperty("Wind", 12.5, "km/h")
         )

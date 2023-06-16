@@ -1,6 +1,8 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Xunit;
+using WeatherApi_CI_CD.Data;
+using WeatherApi_CI_CD.Model;
 
 public class FavoriteCityEndpointTests
 {
@@ -16,7 +18,7 @@ public class FavoriteCityEndpointTests
         {
             var controller = new FavoriteCityController(context);
 
-            var city = new City { Name = "Stockholm" };
+            var city = new City { Name = "stockholm" };
 
             // Act
             var result = await controller.AddCity(city);
@@ -24,7 +26,7 @@ public class FavoriteCityEndpointTests
             // Assert
 
             //Assert.IsType<NotFoundResult>(result);
-             Assert.IsType<CreatedAtActionResult>(result);
+            Assert.IsType<CreatedAtActionResult>(result);
         }
     }
 }
