@@ -55,6 +55,7 @@ function StatisticsComponent() {
       </Container>
     </Background>
   );
+  
 }
 
 export default StatisticsComponent;
