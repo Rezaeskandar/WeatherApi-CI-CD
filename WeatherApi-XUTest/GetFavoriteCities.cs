@@ -1,6 +1,8 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Xunit;
+using WeatherApi_CI_CD.Data;
+using WeatherApi_CI_CD.Model;
 
 
 public class GetFavoriteCities
@@ -18,9 +20,9 @@ public class GetFavoriteCities
             // Prepare the test data
             var cities = new List<City>
         {
-            new City { Name = "Stockholm" },
-            new City { Name = "Gothenburg" },
-            new City { Name = "Malmö" }
+            new City { Name = "stockholm" },
+            new City { Name = "gothenburg" },
+            new City { Name = "malmö" }
         };
             context.Cities.AddRange(cities);
             context.SaveChanges();

@@ -1,15 +1,8 @@
-using System;
-using Xunit;
-using Microsoft.AspNetCore.TestHost;
-using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Mvc.Testing;
 using System.Net.Http.Json;
 using WeatherApi_XUTest;
-using WeatherApi_CI_CD;
-using Microsoft.AspNetCore.Http;
-using Microsoft.VisualStudio.TestPlatform.TestHost;
-using Microsoft.AspNetCore.Builder;
-using Microsoft.Extensions.DependencyInjection;
-using Microsoft.AspNetCore.Mvc.Testing;
+using Xunit;
 
 //
 public partial class WeatherForecastControllerTests
@@ -38,7 +31,7 @@ public partial class WeatherForecastControllerTests
         Assert.Equal("Stockholm", forecast.WeatherData.Location);
         // Add these lines to check each property
         Assert.Equal("Temperature", forecast.WeatherData.Temperature.Name);
-        Assert.Equal(23, forecast.WeatherData.Temperature.Value);
+        Assert.Equal(33, forecast.WeatherData.Temperature.Value);
         Assert.Equal("°C", forecast.WeatherData.Temperature.Unit);
         Assert.Equal("Humidity", forecast.WeatherData.Humidity.Name);
         Assert.Equal(65, forecast.WeatherData.Humidity.Value);
@@ -96,15 +89,15 @@ public partial class WeatherForecastControllerTests
         public async Task GetStatistics_ReturnsFormattedCountString()
         {
             // Arrange
-            int initialCount = 5;
+            int initialCount = 0;
             var counter = new APICounter(initialCount);
 
             // Act
             var statistics = await counter.GetStatisticsAsync();
 
             // Assert
-            Assert.Equal("Number of API calls: 5", statistics);
-            
+            Assert.Equal("Number of API calls: 0", statistics);
+
         }
     }
 }

@@ -1,4 +1,4 @@
-﻿namespace WeatherApi_CI_CD
+﻿namespace WeatherApi_CI_CD.Model
 {
     public class City
     {
