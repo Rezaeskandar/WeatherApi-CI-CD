@@ -1,9 +1,11 @@
 
 
-//TODOS
+
 
 
 using Microsoft.EntityFrameworkCore;
+//TODOS 
+
 
 //[]Som användare av API:et vill jag kunna spara en favoritstad och slippa ange den varje gång(Obs att det bara ska sparas så länge appen körs, alltså inte mellan körningar)
 //[]Som systemägare vill jag kunna se om API:et körs(health check)
@@ -40,7 +42,7 @@ var app = builder.Build();
 
 int apiCall = 0;// API call counter and make it as a global variable
 
-// Configure the HTTP request pipeline.
+
 if (app.Environment.IsDevelopment())
 {
     app.UseSwagger();

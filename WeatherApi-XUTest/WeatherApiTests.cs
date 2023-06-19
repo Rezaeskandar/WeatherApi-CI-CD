@@ -69,6 +69,7 @@ public partial class WeatherForecastControllerTests
         }
     }
 
+    // added counter test 
     public class APICounterTests
     {
         [Fact]
