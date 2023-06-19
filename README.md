@@ -5,9 +5,9 @@ We will use Test Driven Development process to create this application and will 
 ## Structure of Project:
 |   Tasks     |   Framwork    |  Effect  |
 |-----|--------|-------|
-|C# |  Minnimal API   | Out via Swagger
+|C# |  Minimal API   | Out via Swagger
 |JS |   React, React-Dom, Vite   | Fetching Data via Endpoints
-|Database |   InMemmory   | InMemmory has limmited dat
+|Database |   InMemory   | InMemmory has limmited dat
 |Model | VS C# & .NET Core 6   | Get and Post
 |Connection |  JSON   |  Global Datbase
 |TDD |  XUnit Test   | Red-Green-Refactor
