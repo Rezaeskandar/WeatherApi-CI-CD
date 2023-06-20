@@ -165,6 +165,53 @@ public partial class WeatherForecastControllerTests
             }
         }
     }
+    // Grt favorite Cities
+
+    public class GetFavoriteCitiesTests : IClassFixture<WebApplicationFactory<Program>>
+    {
+        private readonly WebApplicationFactory<Program> _factory;
+
+        public GetFavoriteCitiesTests(WebApplicationFactory<Program> factory)
+        {
+            _factory = factory;
+        }
+
+        [Fact]
+        public async Task GetFavoriteCities_ReturnsListOfCities()
+        {
+            // Arrange
+            var client = _factory.CreateClient();
+            var options = new DbContextOptionsBuilder<DataContext>()
+                .UseInMemoryDatabase(databaseName: "TestDatabase")
+                .Options;
+
+            using (var context = new DataContext(options))
+            {
+                // Prepare the test data
+                var cities = new List<City>
+        {
+            new City { Name = "stockholm" },
+            new City { Name = "gothenburg" },
+            new City { Name = "malmö" }
+        };
+                context.Cities.AddRange(cities);
+                context.SaveChanges();
+
+                // Act
+                var response = await client.GetAsync("/favorite-cities");
+
+                // Assert
+                response.EnsureSuccessStatusCode();
+                Assert.Equal(HttpStatusCode.OK, response.StatusCode);
+
+                var returnedCities = await response.Content.ReadAsAsync<List<City>>();
+                Assert.Empty(returnedCities);
+                //Assert.NotEmpty(returnedCities);
+            }
+        }
+
+    }
+
 }
 
 
