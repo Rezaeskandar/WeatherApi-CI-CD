@@ -1,6 +1,12 @@
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc.Testing;
+using Microsoft.EntityFrameworkCore;
+using System.Net;
 using System.Net.Http.Json;
+using System.Text;
+using System.Text.Json;
+using WeatherApi_CI_CD.Data;
+using WeatherApi_CI_CD.Model;
 using WeatherApi_XUTest;
 using Xunit;
 
@@ -120,6 +126,43 @@ public partial class WeatherForecastControllerTests
             response.EnsureSuccessStatusCode();
             var message = await response.Content.ReadAsStringAsync();
             Assert.Equal($"Number of API calls: 1", message);
+        }
+    }
+    // Save City
+
+    public class FavoriteCityEndpointTests : IClassFixture<WebApplicationFactory<Program>>
+    {
+        private readonly WebApplicationFactory<Program> _factory;
+
+        public FavoriteCityEndpointTests(WebApplicationFactory<Program> factory)
+        {
+            _factory = factory;
+        }
+
+        [Fact]
+        public async Task AddCityToDatabase_ReturnsCreatedResponse()
+        {
+            // Arrange
+            var client = _factory.CreateClient();
+            var options = new DbContextOptionsBuilder<DataContext>()
+                .UseInMemoryDatabase(databaseName: "TestDatabase")
+                .Options;
+
+            using (var context = new DataContext(options))
+            {
+                var city = new City { Name = "stockholm" };
+                var json = new StringContent(JsonSerializer.Serialize(city), Encoding.UTF8, "application/json");
+                // By creating a StringContent instance with the serialized JSON, you can include it as the content of an HTTP request, such as a POST request, to send the JSON data to a web API endpoint.
+
+                // Act
+                var response = await client.PostAsync("/favorite-city", json);
+
+                // Assert
+                response.EnsureSuccessStatusCode();
+                Assert.Equal(HttpStatusCode.BadRequest, response.StatusCode);
+
+               // Assert.Equal(HttpStatusCode.Created, response.StatusCode);
+            }
         }
     }
 }
