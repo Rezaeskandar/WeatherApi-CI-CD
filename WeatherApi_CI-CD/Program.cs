@@ -61,7 +61,7 @@ app.MapGet("/weatherforecast-Stockholm", () =>
         new WeatherData
         (
             "Stockholm",
-            new WeatherProperty("Temperature", 33, "°C"),
+            new WeatherProperty("Temperature", 33, "C"),
             new WeatherProperty("Humidity", 65, "%"),
             new WeatherProperty("Wind", 12.5, "km/h")
         )
