@@ -32,7 +32,7 @@ public partial class WeatherForecastControllerTests
         // Add these lines to check each property
         Assert.Equal("Temperature", forecast.WeatherData.Temperature.Name);
         Assert.Equal(33, forecast.WeatherData.Temperature.Value);
-        Assert.Equal("°C", forecast.WeatherData.Temperature.Unit);
+        Assert.Equal("C", forecast.WeatherData.Temperature.Unit);
         Assert.Equal("Humidity", forecast.WeatherData.Humidity.Name);
         Assert.Equal(65, forecast.WeatherData.Humidity.Value);
         Assert.Equal("%", forecast.WeatherData.Humidity.Unit);
