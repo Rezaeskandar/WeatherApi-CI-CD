@@ -12,6 +12,9 @@ We will use Test Driven Development process to create this application and will 
 |Connection |  JSON   |  Global Datbase
 |TDD |  XUnit Test   | Red-Green-Refactor
 
+## Scrum Board Link - Below
+https://trello.com/b/iGF6RiYu/ci-cd-scrum-board
+
 ## Team
 
 - [Reza](https://github.com/Rezaeskandar)
