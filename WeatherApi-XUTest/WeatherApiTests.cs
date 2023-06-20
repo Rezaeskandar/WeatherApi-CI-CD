@@ -114,12 +114,12 @@ public partial class WeatherForecastControllerTests
         public async Task GetStatistice_Return()
         {
             // Act
-            var response = await _client.GetAsync("APICallChecked");
+            var response = await _client.GetAsync("/API/call/statistics");
 
             // Assert
             response.EnsureSuccessStatusCode();
             var message = await response.Content.ReadAsStringAsync();
-            Assert.Equal($"Number of API calls: 3", message);
+            Assert.Equal($"Number of API calls: 1", message);
         }
     }
 }
