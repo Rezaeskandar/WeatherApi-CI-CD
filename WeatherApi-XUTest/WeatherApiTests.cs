@@ -159,9 +159,9 @@ public partial class WeatherForecastControllerTests
 
                 // Assert
                 response.EnsureSuccessStatusCode();
-                Assert.Equal(HttpStatusCode.BadRequest, response.StatusCode);
+                //Assert.Equal(HttpStatusCode.BadRequest, response.StatusCode);
 
-               // Assert.Equal(HttpStatusCode.Created, response.StatusCode);
+                Assert.Equal(HttpStatusCode.Created, response.StatusCode);
             }
         }
     }
