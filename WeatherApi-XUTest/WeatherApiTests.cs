@@ -132,15 +132,16 @@ public partial class WeatherForecastControllerTests
             {
                 var city = new City { Name = "stockholm" };
                 var json = new StringContent(JsonSerializer.Serialize(city), Encoding.UTF8, "application/json");
+                // By creating a StringContent instance with the serialized JSON, you can include it as the content of an HTTP request, such as a POST request, to send the JSON data to a web API endpoint.
 
                 // Act
                 var response = await client.PostAsync("/favorite-city", json);
 
                 // Assert
                 response.EnsureSuccessStatusCode();
-                Assert.Equal(HttpStatusCode.BadRequest, response.StatusCode);
+                //Assert.Equal(HttpStatusCode.BadRequest, response.StatusCode);
 
-                //Assert.Equal(HttpStatusCode.Created, response.StatusCode);
+                Assert.Equal(HttpStatusCode.Created, response.StatusCode);
             }
         }
     }
