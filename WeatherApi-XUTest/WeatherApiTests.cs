@@ -205,8 +205,8 @@ public partial class WeatherForecastControllerTests
                 Assert.Equal(HttpStatusCode.OK, response.StatusCode);
 
                 var returnedCities = await response.Content.ReadAsAsync<List<City>>();
-                Assert.Empty(returnedCities);
-                //Assert.NotEmpty(returnedCities);
+                //Assert.Empty(returnedCities);
+                Assert.NotEmpty(returnedCities);
             }
         }
 
