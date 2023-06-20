@@ -70,8 +70,17 @@ public partial class WeatherForecastControllerTests
     }
 
     // added counter test 
-    public class APICounterTests
+    public class APICounterTests : IClassFixture<WebApplicationFactory<Program>>
     {
+        private readonly WebApplicationFactory<Program> _factory;
+        private readonly HttpClient _client;
+
+        public APICounterTests(WebApplicationFactory<Program> factory)
+        {
+            _factory = factory;
+            _client = _factory.CreateClient();
+        }
+
         [Fact]
         public async Task IncrementAPICall_IncrementsCount()
         {
@@ -99,6 +108,18 @@ public partial class WeatherForecastControllerTests
             // Assert
             Assert.Equal("Number of API calls: 0", statistics);
 
+        }
+
+        [Fact]
+        public async Task GetStatistice_Return()
+        {
+            // Act
+            var response = await _client.GetAsync("/API/call/statistics");
+
+            // Assert
+            response.EnsureSuccessStatusCode();
+            var message = await response.Content.ReadAsStringAsync();
+            Assert.Equal($"Number of API calls: 1", message);
         }
     }
 }
