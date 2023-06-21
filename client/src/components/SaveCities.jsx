@@ -72,7 +72,7 @@ function SaveFavoriteCities() {
     }
 
     try {
-      const response = await axios.post('https://dev.kjeld.io:40200/favorite-city', { city: cityName });
+      const response = await axios.post('https://dev.kjeld.io:40200/favorite-city', { name: cityName });
       setSuccessMessage(cityName);
       setErrorMessage('');
     } catch (error) {
